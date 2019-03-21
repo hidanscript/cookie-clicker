@@ -1,14 +1,14 @@
 const cookie_spr = document.getElementById('cookie-sprite');
 const cookieCounter = document.getElementById('cookie-counter');
 const cpsCounter = document.getElementById('cookies-ps-counter');
+const gameVersion = "1.0.0";
 
 //Sounds
-let clickSound = new sound("sounds/clickb1.mp3")
 
 //Variables
 let cookies = 0;
 let cookiesEarned = 0;
-let cookiesPSecond = 1;
+let cookiesPSecond = 0;
 let cookiesPClick = 1;
 
 function increaseCookies(value, isClicked) {
@@ -18,10 +18,19 @@ function increaseCookies(value, isClicked) {
 	cookieCounter.innerHTML = "Cookies: " + cookies;
 
 	if(isClicked) {
+		createGainText();
+		const clickSound = new sound(getSound());
+		clickSound.stop();
 		clickSound.play();
+		clickSound.delete();
 		cookie_spr.classList.add('cookie-clicked');
 		setTimeout(() => cookie_spr.classList.remove('cookie-clicked'), 100);
 	}
+}
+
+function createGainText() {
+	this.createGaintText = document.createElement("h3");
+	this.createGaintText.innerHTML = "+" + cookiesPClick;
 }
 
 function sound(src) {
@@ -39,6 +48,9 @@ function sound(src) {
 
   this.stop = function(){
     this.sound.pause();
+  }
+  this.delete = function(){
+  	this.sound = document.removeElement(this);
   }
 
 }
@@ -64,6 +76,26 @@ function update(time = 0) {
 	rotateAnimation(0.2);
 
 	requestAnimationFrame(update);
+}
+
+function getSound() {
+
+	const randomSound = Math.floor(Math.random() * 8);
+	let selectedSound = "";
+
+	if(randomSound === 0) {
+		randomSound++;
+		selectedSound = "sounds/clickb" + randomSound + ".mp3";
+		console.log(randomSound);
+	} else if(randomSound < 8) {
+		selectedSound = "sounds/clickb" + randomSound + ".mp3";
+		console.log(randomSound);
+	} else {
+		randomSound--;
+		selectedSound = "sounds/clickb" + randomSound + ".mp3";
+		console.log(randomSound);
+	}
+	return selectedSound;
 }
 
 
