@@ -1,0 +1,78 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+/*
+header {
+	background-color: white;
+	width: 100%;
+	position: fixed;
+}
+*/
+.cookie-interface h1, h2, h3 {
+	position: absolute;
+}
+
+.cookie-interface h1 {
+	padding: 20px;
+	font-family: Asap, sans-serif;
+	font-size: 30px;
+	text-align: center;
+}
+
+.cookie-interface h2 {
+	padding: 20px;
+	margin-top: -15px;
+	font-family: Asap, sans-serif;
+	font-size: 20px;
+	text-align: center;
+}
+
+.cookie-interface h3 {
+	padding: 5px;
+	margin-top: -10px;
+	font-family: Asap, sans-serif;
+	font-size: 17px;
+	text-align: center;
+}
+
+
+body {
+	background: lightblue;
+}
+
+#cookie-bg {
+	position: absolute;
+	width: 500px;
+	height: 100%;
+}
+
+.cookie {
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+	align-items: left;
+}
+
+.cookie img {
+	position: absolute;
+	max-width: 15%;
+	margin-top: 300px;
+	margin-left: 90px;
+}
+
+.cookie img:hover {
+	cursor: pointer;
+}
+
+.cookie-clicked {
+	transition: all 70ms;
+	text-anchor: center;
+	width: 250px;
+}
+
+#cookie-sprite {
+	transform: rotate(0);  
+	transform: scale(1);
+	transition: 250ms ease-in-out;
+}
