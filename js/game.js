@@ -1,16 +1,39 @@
 const cookie_spr = document.getElementById('cookie-sprite');
 const cookieCounter = document.getElementById('cookie-counter');
 const cpsCounter = document.getElementById('cookies-ps-counter');
-const gameVersion = "1.0.0";
+const grandmaCounter_div = document.getElementById('grandma-counter');
+const grandmaCounter_btn = document.getElementById('addGrandma');
 
-//Sounds
+const gameVersion = "1.0.0";
 
 //Variables
 let cookies = 0;
 let cookiesEarned = 0;
 let cookiesPSecond = 0;
 let cookiesPClick = 1;
+let degreesRotation = 0;
+let lastTime = 0;
 
+//Objects
+const mouseProps = {
+	x: 0,
+	y: 0,
+};
+//Objects - CpS
+
+const cursor = {
+	val: 50,
+	counter: 0,
+	CpS: cookiesPClick / 10,
+};
+
+const grandma = {
+	val: 100,
+	counter: 0,
+	CpS: 2,
+};
+
+//Cookies Management
 function increaseCookies(value, isClicked) {
 
 	cookies += value;
@@ -18,48 +41,13 @@ function increaseCookies(value, isClicked) {
 	cookieCounter.innerHTML = "Cookies: " + cookies;
 
 	if(isClicked) {
-		createGainText();
+		//createCookieGainText();
 		const clickSound = new sound(getSound());
 		clickSound.stop();
 		clickSound.play();
-		clickSound.delete();
 		cookie_spr.classList.add('cookie-clicked');
 		setTimeout(() => cookie_spr.classList.remove('cookie-clicked'), 100);
 	}
-}
-
-function createGainText() {
-	this.createGaintText = document.createElement("h3");
-	this.createGaintText.innerHTML = "+" + cookiesPClick;
-}
-
-function sound(src) {
-
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  document.body.appendChild(this.sound);
-
-  this.play = function(){
-    this.sound.play();
-  }
-
-  this.stop = function(){
-    this.sound.pause();
-  }
-  this.delete = function(){
-  	this.sound = document.removeElement(this);
-  }
-
-}
-
-let degrees = 0;
-
-function rotateAnimation(value) {
-	degrees += value;
-	cookie_spr.style.transform = "rotate("+degrees+"deg) ";
 }
 
 function cpsIncreaser() {
@@ -69,13 +57,48 @@ function cpsIncreaser() {
 
 }
 
-let lastTime = 0;
-function update(time = 0) {
-	const deltaTime = time - lastTime;
-	lastTime = time;
-	rotateAnimation(0.2);
+function createCookieGainText() {
+	this.createGaintText = document.createElement("h3");
+	this.createGaintText.innerHTML = "+" + cookiesPClick;
+}
 
-	requestAnimationFrame(update);
+function buyBuilding(object) {
+
+	if(object.val <= cookies) {
+		//plays the sound
+		const clickSound = new sound('sounds/buy2.mp3');
+		clickSound.stop();
+		clickSound.play();
+		//Apply stats
+		cookies -= object.val;
+		cookiesPSecond += object.CpS;
+		object.val += Math.floor(object.val / 2);
+		object.counter++;
+		cookieCounter.innerHTML = "Cookies: " + cookies;
+		cpsCounter.innerHTML = "CpS: " + cookiesPSecond;
+	}
+
+}
+
+//Objects and Sounds
+
+function sound(src) {
+
+	this.sound = document.createElement("audio");
+	this.sound.src = src;
+	this.sound.setAttribute("preload", "auto");
+	this.sound.setAttribute("controls", "none");
+	this.sound.style.display = "none";
+	document.body.appendChild(this.sound);
+
+	this.play = function(){
+		this.sound.play();
+	}
+
+	this.stop = function(){
+		this.sound.pause();
+	}
+
 }
 
 function getSound() {
@@ -86,22 +109,47 @@ function getSound() {
 	if(randomSound === 0) {
 		randomSound++;
 		selectedSound = "sounds/clickb" + randomSound + ".mp3";
-		console.log(randomSound);
 	} else if(randomSound < 8) {
 		selectedSound = "sounds/clickb" + randomSound + ".mp3";
-		console.log(randomSound);
 	} else {
 		randomSound--;
 		selectedSound = "sounds/clickb" + randomSound + ".mp3";
-		console.log(randomSound);
 	}
 	return selectedSound;
 }
 
+//Animations
+function rotateAnimation(value) {
+	degreesRotation += value;
+	cookie_spr.style.transform = "rotate("+degreesRotation+"deg) ";
+}
+
+//Update
+function update(time = 0) {
+	const deltaTime = time - lastTime;
+	lastTime = time;
+	rotateAnimation(0.2);
+
+	requestAnimationFrame(update);
+}
+
+//Init this thing.
+window.addEventListener('mousemove', function(e) {
+	mouseProps.x = e.x;
+	mouseProps.y = e.y;
+});
 
 cookie_spr.addEventListener('click', function() {
 	increaseCookies(cookiesPClick, true);
 });
+
+grandmaCounter_btn.addEventListener('click', function() {
+	buyBuilding(grandma);
+	grandmaCounter_div.innerHTML = "Grandmas: "+ grandma.counter;
+	grandmaCounter_btn.innerHTML = "Grandma: " + grandma.val + " cookies<br>CpS: +" + grandma.CpS;
+});
+
+grandmaCounter_btn.innerHTML = "Grandma: " + grandma.val + " cookies<br>CpS: +" + grandma.CpS;
 
 update();
 cpsIncreaser();

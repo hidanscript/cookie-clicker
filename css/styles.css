@@ -80,3 +80,16 @@ body {
 	transform: scale(1);
 	transition: 250ms ease-in-out;
 }
+
+.control-panel {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+#grandma-counter {
+	font-family: Asap, sans-serif;
+	font-size: 40px;
+	font-weight: bold;
+}
