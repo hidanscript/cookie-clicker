@@ -9,20 +9,27 @@ header {
 	position: fixed;
 }
 */
-.cookie-interface h1, h2, h3 {
+
+.container {
+	position: relative;
+	border: 6px solid black;
+}
+
+.container h1, h2, h3 {
 	position: absolute;
 	color: white;
 }
 
-.cookie-interface h1 {
+.container h1 {
 	padding: 20px;
 	margin-left: 100px;
 	font-family: Asap, sans-serif;
 	font-size: 40px;
 	text-align: center;
+	text-shadow: 8px 6px black;
 }
 
-.cookie-interface h2 {
+.container h2 {
 	padding: 20px;
 	margin-top: 45px;
 	margin-left: 185px;
@@ -31,7 +38,7 @@ header {
 	text-align: center;
 }
 
-.cookie-interface h3 {
+.container h3 {
 	padding: 5px;
 	margin-top: 85px;
 	margin-left: 225px;
@@ -42,13 +49,17 @@ header {
 
 
 body {
-	background: lightblue;
+	background-image: url(../img/bgWood.png);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center 100%;
 }
 
 #cookie-bg {
 	position: fixed;
 	width: 500px;
 	height: 100%;
+	border: 10px solid black;
 }
 
 .cookie {
@@ -62,7 +73,7 @@ body {
 	position: absolute;
 	max-width: 15%;
 	margin-top: 300px;
-	margin-left: 105px;
+	margin-left: 115px;
 }
 
 .cookie img:hover {
@@ -92,4 +103,5 @@ body {
 	font-family: Asap, sans-serif;
 	font-size: 40px;
 	font-weight: bold;
+	color: white;
 }

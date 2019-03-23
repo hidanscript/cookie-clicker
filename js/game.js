@@ -15,7 +15,7 @@ let degreesRotation = 0;
 let lastTime = 0;
 
 //Objects
-const mouseProps = {
+let mouseProps = {
 	x: 0,
 	y: 0,
 };
@@ -41,7 +41,7 @@ function increaseCookies(value, isClicked) {
 	cookieCounter.innerHTML = "Cookies: " + cookies;
 
 	if(isClicked) {
-		//createCookieGainText();
+		createCookieGainText();
 		const clickSound = new sound(getSound());
 		clickSound.stop();
 		clickSound.play();
@@ -58,8 +58,13 @@ function cpsIncreaser() {
 }
 
 function createCookieGainText() {
-	this.createGaintText = document.createElement("h3");
-	this.createGaintText.innerHTML = "+" + cookiesPClick;
+	let createGainText = document.createElement("p");
+
+	createGainText.innerHTML = "+" + cookiesPClick;
+	createGainText.style.position = "absolute";
+	createGainText.style.left = mouseProps.x;
+	createGainText.style.top = mouseProps.y;
+	console.log("Text created! x: " + createGainText.style.left + " y: " + createGainText.style.top);
 }
 
 function buyBuilding(object) {
@@ -72,7 +77,7 @@ function buyBuilding(object) {
 		//Apply stats
 		cookies -= object.val;
 		cookiesPSecond += object.CpS;
-		object.val += Math.floor(object.val / 2);
+		object.val += Math.floor(object.val / 3);
 		object.counter++;
 		cookieCounter.innerHTML = "Cookies: " + cookies;
 		cpsCounter.innerHTML = "CpS: " + cookiesPSecond;
